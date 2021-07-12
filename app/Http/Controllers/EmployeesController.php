@@ -12,25 +12,25 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeesController extends Controller
-{ 
+{
     /** Home del Empleado
     *** Perfil: Empleado ***/
     public function index(){
         $project = Project::all()->where('user_id', Auth::user()->id);
         $payrolls = PayrollEmployee::all()->where('user_id', Auth::user()->id);
-        
+
         $user = User::all()->where('user_id', Auth::user()->id);
-        
-        return view('employee.home')->with(compact('project','payrolls','user')); 
+
+        return view('employee.home')->with(compact('project','payrolls','user'));
     }
 
     /** Listado de Empleados
     *** Perfil: Admin ***/
     public function list(){
-        $employees = User::where('profile_id', '=', 3)->paginate(10);
-        
+        $employees = User::where('profile_id', '=', 3)->paginate(5);
+
         return view('admin.employees.list')
-        ->with('employees', $employees); 
+        ->with('employees', $employees);
     }
 
     /** Crear nuevo empleado
@@ -58,14 +58,14 @@ class EmployeesController extends Controller
 
         if ($request->hasFile('photo')){
             $file = $request->file('photo');
-            $name = $employe->id.".".$file->getClientOriginalExtension();
+            $name = $employee->id.".".$file->getClientOriginalExtension();
             $file->move(public_path().'/uploads/images/users/photos', $name);
             $employee->photo = $name;
         }
 
         if ($request->hasFile('curriculum')){
             $file2 = $request->file('curriculum');
-            $name2 = $employe->id.".".$file2->getClientOriginalExtension();
+            $name2 = $employee->id.".".$file2->getClientOriginalExtension();
             $file2->move(public_path().'/uploads/documents/curriculums', $name2);
             $employee->curriculum = $name2;
         }
@@ -96,9 +96,9 @@ class EmployeesController extends Controller
             array_push($projectsID, $project->id);
 
         }
-        
+
         $availableProjects = Project::whereNotIn('id', $projectsID)->get();
-        
+
         $projectColors = ['#FF3F3F', '#12A0B4', '#940385'];
 
         return view('admin.employees.show')->with(compact('employee', 'projectColors', 'availableProjects'));
@@ -131,7 +131,7 @@ class EmployeesController extends Controller
         $availableSkills = DB::table('skills')
                               ->orderBy('skill', 'ASC')
                               ->get();
-        
+
         $itemColors = ['#FF3F3F', '#12A0B4', '#940385'];
 
         return view('landing.profile.profile')
@@ -177,11 +177,11 @@ class EmployeesController extends Controller
 
 
         return redirect()->back()->with('msj-exitoso', 'Billetera Guardada Exitosamente');
-        
+
     }
 
     public function upload_curriculum(Request $request){
-        
+
         $user = User::find(Auth::user()->id);
 
         $user->update($request->all());
@@ -191,9 +191,9 @@ class EmployeesController extends Controller
         $name = $user->id.".".$file->getClientOriginalExtension();
         $file->move(public_path('storage') . '/flie-curriculum', $name);
         $user->curriculum = $name;
-        
+
         }
-        
+
 
         $user->save();
 
