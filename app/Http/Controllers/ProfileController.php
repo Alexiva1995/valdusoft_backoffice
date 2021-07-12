@@ -2,64 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
 
-    /**
-     * Vista perfil
-     *
-     * @return void
-     */
-    public function index()
-    {
-
-        if (Auth::guest()){
-
-            return redirect('login');
-
-        }else{
-
-           return view('landing.profile.profile'); 
-
-        }
-        
-    }
-
-    /**
-     * Vista editar perfil
-     *
-     * @return void
-     */
-    public function edit()
-    {
-
+    /** Editar Perfil
+    *** Perfil: Admin - Empleado - Cliente ***/
+    public function edit(){
         $user = Auth::user();
 
-        return view('user.profile')
+        return view('editProfile')
         ->with('user',$user);
 
     }
 
-    /**
-     * Funcion editar perfil
-     *
-     * @param Request $request
-     * @return void
-     */
+    /** Guardar datos modificados del perfil
+    *** Perfil: Admin - Empleado - Cliente ***/
     public function update(Request $request)
     {
-
-        $user = Auth::user()->id;
-
-        $fields = [    ];
-
-        $msj = [    ];
-
-        $this->validate($request, $fields, $msj);
+ 
+        $user = User::find(Auth::user()->id);
 
         $user->update($request->all());
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $name = $user->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path('storage') . '/photo-profile', $name);
+            $user->photo = $name;
+         }  
+
 
         $user->save();
 

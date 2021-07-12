@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PayrollEmployee;
+use Illuminate\Support\Facades\Auth;
+
 class FinancingController extends Controller
-{
+{   
+    /** De Interés - Financiamiento
+    *** Perfil: Empleado ***/
+    public function list(){
 
-    /**
-     * Vista financiamiento
-     *
-     * @return void
-     */
-    public function index()
-    {
+        $employes = PayrollEmployee::where('user_id', Auth::id())->paginate(10);
 
-           return view('landing.financing.financing'); 
-        
+        return view('employee.financing')->with(compact('employes')); 
     }
 }

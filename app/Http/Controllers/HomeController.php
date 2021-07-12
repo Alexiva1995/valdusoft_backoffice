@@ -20,7 +20,7 @@ class HomeController extends Controller
     }
 
    
-    /**
+    /** 
      * Vista principal para cada rol
      *
      * @return void
@@ -28,16 +28,6 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (Auth::user()->profile_id == 1){
-
-            return redirect('admin');
-
-        }else if(Auth::user()->profile_id == 2){
-
-        }else if(Auth::user()->profile_id == 3){
-
-        }
-        
         return view('home'); 
         
     }

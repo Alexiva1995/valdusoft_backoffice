@@ -14,19 +14,19 @@ class Hosting extends Model
      * @var array
      */
     protected $fillable = [
-        'client',
+        'user_id',
         'url',
         'create_date',
         'due_date',
+        'price',
+        'renewal_price',
+        'years',
+        'renewal_hosting',
+        'updated_at',
     ];
 
-    public function getPhotoUrlAttribute()
-    {
-        if($this->getMedia('photo')->isEmpty())
-        {
-            return $this->role == "completion specialist" ?  "/img/completion_photo.png" : "/img/user_photo.jpg";
-        } else {
-            return $this->getMedia('photo')->first()->file;
-        }
+    public function user(){
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
+    
 }

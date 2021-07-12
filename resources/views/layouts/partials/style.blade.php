@@ -9,14 +9,16 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/themes/dark-layout.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/themes/semi-dark-layout.css') }}">
 
-<link rel="stylesheet" type="text/css"
-    href="{{ asset('template/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/core/colors/palette-gradient.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/pages/authentication.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/pages/app-chat.css') }}">   
 
 <link rel="stylesheet" type="text/css" href="{{ asset('template/assets/css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/vendors/css/extensions/toastr.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/css/plugins/extensions/toastr.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/vendors/css/animate/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('template/app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
 
 @stack('custom_css')

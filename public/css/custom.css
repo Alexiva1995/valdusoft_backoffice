@@ -170,32 +170,82 @@
 /*         PROJECTS            */
 /*/////////////////////////////*/
 
-
-#card-head1{
-    height:790px ;
+.status-label {
+    border-radius: 10px;
+    font-weight: 500;
+    color: white;
+    padding: 10px;
 }
-
-#card-head {
-    height: 897px;
+.status-label-gray{
+    background: #3c3232;
+}
+.status-label-purple{
+    background: #650865;
+}
+.status-label-blue{
+    background: #252856;
+}
+.status-label-green{
+    background: #26A30B;
+}
+.action-icon{
+    color: #3C3232 !important;
+}
+.nav-link-pills{
+    padding: 12px !important;
+}
+.transaction-description{
+    font-size: 15px; 
+    color: #650865; 
+    font-weight: 500;
+}
+.transaction-status{
+    font-size: 12px; 
+    color: #3C3232; 
+    font-weight: 400;
 }
 
 #process-project {
     background: #3c3232;
     border-radius: 10px;
+    font-weight: 500;
 }
 
 #div-bottom-project {
     padding: 0px 0px !important;
 }
 
-#div-bottom-background {
-    background: #ebebeb;
-    color: #000;
-}
 
 #div-bottom-background2 {
     background: #650865;
+    cursor: pointer;
+
 }
+
+.btn-circle {
+    width: 39px;
+    height: 39px;
+    font-weight:850;
+    padding: 6px 0px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 18px;
+    box-shadow: 0px 3px 15px rgba(255, 255, 255, 0.2);
+    transition: .2s;
+    
+
+}
+
+.btn{
+    background-color: #EBEBEB;
+
+}
+
+.btn:hover{
+        box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+        transform: scale(1.05,1.05);
+}
+
 
 /*/////////////////////////////*/
 /*   PERSONALIZED CLASSES      */
@@ -203,9 +253,10 @@
 /*/////////////////////////////*/
 
 #container-big-principal {
-    width: 1039px;
-    height: 750.57px;
+    width: 905px;
+    height: 700.57px;
     background: #ffffff;
+    margin-right: 180px; 
 }
 
 #all-center-items {
@@ -213,19 +264,89 @@
     align-items: center;
 }
 
-#card-body-items {
-    padding: 0px 0px !important;
-}
-#curiculum-email {
-    left: 15px;
-}
 /*/////////////////////////////*/
 /*   PERSONALIZED CLASSES      */
 /*         DASHBOARD            */
 /*/////////////////////////////*/
 
 #shadow {
-    background: linear-gradient( rgba(37, 40, 86, 0) 0%, #252856 100%);
+    background: linear-gradient(rgba(37, 40, 86, 0) 0%, #252856 100%);
     border-radius: 7px;
+    align-items: center;
+ /*   width: 140px;*/
+}
+
+
+/*/////////////////////////////*/
+/*   PERSONALIZED CLASSES      */
+/*         Responsive            */
+/*/////////////////////////////*/
+
+#recomiendo{
+    right: 5px;
 
 }
+
+
+@media screen and (max-width: 531px) {
+    #recomiendo { display: flex; flex-flow: column; }
+    #recomiendo {
+        width: 180px;
+    
+}}
+
+#position {
+    margin: 0px 15px 0px 0px;
+}
+
+#size {
+    margin: 0px 15px 0px 15px;
+}
+
+
+@media only screen and (max-width: 800px) {
+
+    #position {
+        margin: 0px 10px 20px 0px;
+    }
+}
+
+/*////////// FINANCIERO FACTURAS, MODAL (GENERAR) //////////*/
+
+#listas{
+    margin-bottom: 50px;
+}
+
+.one{
+margin-left: 25px;
+display:inline-block;
+}
+
+.four{
+margin-left: 100px;
+display:inline-block;
+
+}
+
+.three{
+margin-left: 50px;
+display:inline-block;
+
+}
+
+.two{
+margin-left: 25px;
+display:inline-block;
+
+}
+
+#add_field {
+margin-left: 725px;
+padding:5px;
+
+}
+#botom{
+    width: 150px;
+    margin-left: 620px;
+}
+

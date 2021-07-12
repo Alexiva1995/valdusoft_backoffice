@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     @include('layouts.partials.head')
     @include('layouts.partials.style')
+
+    @livewireStyles
 
     @stack('styles')
 
@@ -16,9 +19,14 @@
 
     @yield('content')
 
-    @include('layouts.partials.scripts')
+    @include('layouts.partials.scripts') 
     
+    @livewireScripts
+
     @stack('scripts')
-    
+
+   
+
 </body>
+
 </html>

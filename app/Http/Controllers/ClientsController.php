@@ -2,88 +2,114 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str as Str;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Bill;
+use App\Models\Hosting;
+use App\Models\Project;
+
 class ClientsController extends Controller
 {
+    /** Home del Cliente
+    *** Perfil: Cliente ***/
+    public function index(){
+        $clients = Bill::all()->where('type', 'C');
+        $hostings = Hosting::paginate(10);
+        $projects = Project::paginate(10);
+        return view('client.home')->with(compact('clients', 'hostings', 'projects'));
 
-    /**
-     * Vista clientes
-     *
-     * @return void
-     */
-    public function index()
-    {
+      
+    }
+    
 
-        $client = Client::all();
+    /** Listado de Clientes
+    *** Perfil: Admin ***/
+    public function list(){
+        $client = User::where('profile_id', '=', 2)
+                    ->orderBy('name', 'ASC')
+                    ->paginate(10);
+                    
 
-        return view('landing.clients.clients')
+        return view('admin.clients.list')
         ->with('client', $client); 
- 
     }
 
-    /**
-     * Vista crear cliente
-     *
-     * @return void
-     */
-    public function create()
-    {
+    /** Crear Nuevo Cliente
+    *** Perfil: Admin ***/
+    public function create(){
+        $skills = DB::table('skills')
+        ->orderBy('skill', 'ASC')
+        ->get();
 
-        return view('landing.clients.create');
+    return view('admin.clients.create')->with(compact('skills'));
 
     }
 
-    /**
-     * Funcion crear cliente
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function store(Request $request)
-    {
-        $client = Client::all();
+       //detalle del proyecto
+       public function show(Request $request, $slug,$id){
+        $client = User::where('id', '=', $id)
+                        ->first();
+        $client_bill =Bill::where('user_id', $request->id)->paginate(10);
+        
+        $projects= Project::where('user_id', $request->id)->paginate(5);
+       
+        $hosting = Hosting::all()->where('user_id', $request->id);
 
-        $fields = [   ];
+        return view('admin.clients.show')
+        ->with(compact('client','client_bill','hosting','projects'));
+    }
 
-        $msj = [    ];
+    /** Guardar Datos del Nuevo Cliente
+    *** Perfil: Admin ***/
+    public function store(Request $request){
 
-        $this->validate($request, $fields, $msj);
+        $client = new User($request->all());
 
-        $client = Client::create($request->all());
+        $client->slug = Str::slug($request->name."-".$request->last_name);
+
+        $client->password = Hash::make($request->password);
+
+        $client->profile_id = 2;
 
         $client->save();
 
-        return redirect()->route('clients')->with('message','Se creo el Cliente Exitosamente');
+        if ($request->hasFile('photo')){
+            $file = $request->file('photo');
+            $name = $client->id.".".$file->getClientOriginalExtension();
+            $file->move(public_path('storage') . '/photo-profile', $name);
+            $client->photo = $name;
+        }
+
+        $client->save();
+ 
+        if (!is_null($request->skills)) {
+            foreach ($request->skills as $skill) {
+                DB::table('skills_users')->insert(
+                    ['skill_id' => $skill, 'user_id' => $client->id]
+                );
+            }
+        }
+        return redirect()->route('admin.clients.list')->with('message','Se creo el Cliente Exitosamente');
         
     }
 
-    /**
-     * Vista editar cliente
-     *
-     * @param [type] $id
-     * @return void
-     */
-    public function edit($id)
-    {
+    /** Editar datos de un Cliente
+    *** Perfil: Admin ***/
+    public function edit($id){
+        $client = User::find($id);
 
-        $client = Client::find($id);
-
-           return view('landing.clients.edit')
-           ->with('client', $client); 
-        
+        return view('admin.clients.edit')
+           ->with('client', $client);
+           
     }
 
-    /**
-     * Funcion editar cliente
-     *
-     * @param Request $request
-     * @param [type] $id
-     * @return void
-     */
-    public function update(Request $request, $id)
-    {
-        $client = Client::find($id);
+    /** Guardar datos modificados de un Cliente
+    *** Perfil: Admin ***/
+    public function update(Request $request, $id){
+        $client = User::find($id);
 
         $fields = [     ];
 
@@ -95,24 +121,18 @@ class ClientsController extends Controller
 
         $client->save();
 
-        return redirect()->route('clients')->with('message','Se actualizo el Cliente Exitosamente');
-
+        return redirect()->route('admin.clients.list')->with('message','Se actualizo el Cliente Exitosamente');
     }
 
-    /**
-     * Funcion eliminar cliente
-     *
-     * @param [type] $id
-     * @return void
-     */
-    public function delete($id)
-    {
-
-        $client = Client::find($id);
-    
+    /** Eliminar un Cliente
+    *** Perfil: Admin ***/
+    public function delete(Request $request){
+        $client = User::find($request->id);
         $client->delete();
       
-        return redirect()->route('clients')->with('message','Se elimino el Cliente'.' '.$client->client.' '.'Exitosamente');
+        return redirect()->route('admin.clients.list')->with('message','Se elimino el Cliente'.' '.$client->client.' '.'Exitosamente');
         
     }
+
+
 }
