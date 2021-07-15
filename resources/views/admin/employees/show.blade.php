@@ -96,9 +96,10 @@
                             <div class="mt-3 pl-2 pr-2">
                                 <div class="project-detail-titles">Skills</div>
                                 <div class="mt-1">
-                                    @foreach ($employee->skills as $skill)
+                                    @foreach ($employee as $skill)
                                     <div class="text-center text-white d-inline-block mr-1">
-                                        <div class="project-detail-skill">{{ $skill->skill }}</div>
+                                        <div class="project-detail-skill">{{ $skill }}</div>
+
                                     </div>
                                     @endforeach
                                 </div>

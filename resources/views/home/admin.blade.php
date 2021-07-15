@@ -139,7 +139,7 @@
         }
         return series;
         }
-        
+
     </script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
@@ -181,14 +181,12 @@
                           <div class="card-content pl-1">
                               <div class="card-body">
                               <img src="{{ asset('images/svg/ilustracion_nomina.svg') }}" class="float-right pl-2" width="150" height="150" alt="">
-                                  <h4 class="pt-2">Consulta y paga la nomina</h4>
+                                  <h4 class="pt-2">Consulta y paga la nomina </h4>
                                 <a href="{{ route('payroll') }}" class="btn btn-primary mt-1"><b>Ver nomina</b></a>
                               </div>
                           </div>
                       </div>
-                        
                     </div>
-
                     <div class="col-7">
                         <div class="card">
                             <div class="card-header">
@@ -244,7 +242,7 @@
                   </div>
 
                 <div class="row">
-                    
+
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">

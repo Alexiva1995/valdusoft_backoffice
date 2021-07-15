@@ -6,195 +6,68 @@ class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-sta
 
 @push('custom_css')
 <style>
-    .btn-primary {
-        border-color: #003573 !important;
-        background-color: #003573 !important;
-        color: #FFFFFF;
-    }
-
-    .btn-client {
-        border-color: #8f138f !important;
-        background-color: #650865 !important;
-        color: #FFFFFF;
-    }
-
-    @import url('https://fonts.googleapis.com/css?family=Poppins');
-
-    * {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    #chart {
-        max-width: auto;
-        /*margin: 35px auto;*/
-        opacity: 0.9;
-    }
-
-    #timeline-chart .apexcharts-toolbar {
-        opacity: 1;
-        border: 0;
-    }
+.morris-hover{position:absolute;z-index:1000}.morris-hover.morris-default-style{border-radius:10px;padding:6px;color:#666;background:rgba(255,255,255,0.8);border:solid 2px rgba(230,230,230,0.8);font-family:sans-serif;font-size:12px;text-align:center}.morris-hover.morris-default-style .morris-hover-row-label{font-weight:bold;margin:0.25em 0}
+.morris-hover.morris-default-style .morris-hover-point{white-space:nowrap;margin:0.1em 0}
 </style>
 @endpush
 
 @push('custom_js')
-<script>
-    /* var options = {
-        chart: {
-            type: "area",
-            height: 500,
-            foreColor: "#999",
-            stacked: true,
-            dropShadow: {
-            enabled: true,
-            enabledSeries: [0],
-            top: -2,
-            left: 2,
-            blur: 5,
-            opacity: 0.06
-            }
-        },
-        colors: ['#650865', '#003573'],
-        stroke: {
-            curve: "smooth",
-            width: 3
-        },
-        dataLabels: {
-            enabled: false
-        },
-        series: [{
-            name: 'Costos',
-            data: generateDayWiseTimeSeries(0, 18)
-        }, {
-            name: 'Ganancias',
-            data: generateDayWiseTimeSeries(1, 18)
-        }],
-        markers: {
-            size: 0,
-            strokeColor: "#fff",
-            strokeWidth: 3,
-            strokeOpacity: 1,
-            fillOpacity: 1,
-            hover: {
-            size: 6
-            }
-        },
-        xaxis: {
-            type: "datetime",
-            axisBorder: {
-            show: true
-            },
-            axisTicks: {
-            show: true
-            }
-        },
-        yaxis: {
-            labels: {
-            offsetX: 14,
-            offsetY: -5
-            },
-            tooltip: {
-            enabled: true
-            }
-        },
-        grid: {
-            padding: {
-            left: -5,
-            right: 5
-            }
-        },
-        tooltip: {
-            x: {
-            format: "dd MMM yyyy"
-            },
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left'
-        },
-        fill: {
-            type: "solid",
-            fillOpacity: 0.7
-        }
-        };
 
-        var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
+<script type="text/javascript">
+//con la directiva json se obtiene los valores del la funcion
+//  index() especificamente la variable $ingresosEgresos
+// y se asing a la constante en javascript ingresosEgresos
 
-        chart.render();
+    const ingresosEgresos = @json($ingresosEgresos);
+    let empleado = [], cliente = [];
 
-        function generateDayWiseTimeSeries(s, count) {
-            var values = [[
-                4,3,10,9,29,19,25,9,12,7,19,5,13,9,17,2,7,5
-            ], [
-                2,3,8,7,22,16,23,7,11,5,12,5,10,4,15,2,6,2
-            ]];
-            var i = 0;
-            var series = [];
-            var x = new Date().getTime();
-            while (i < count) {
-                series.push([x, values[s][i]]);
-                x += 86400000;
-                i++;
+/*la funcion filtro se encarga de obtener los valores del objeto ingresosEgresos
+ y con el for y el if filtra y separa los pagos (cliente) y los egresos(pagos de empleados)
+deacuerto al valor que tenda en la propiedad ['type'] */
+
+    function filtro(){
+        let E = 0, C = 0;
+
+     for(let i=0; i<ingresosEgresos.length; i++ ){
+
+        if(ingresosEgresos[i].type === 'E'){
+           empleado[E++] =  ingresosEgresos[i]
+            }else{
+             cliente[C++] = ingresosEgresos[i]
             }
-            return series;
-        }*/
-    var lineAreaOptions = {
-        chart: {
-            height: 350,
-            type: 'area',
-            foreColor: "#999",
-            stacked: true,
-            dropShadow: {
-                enabled: true,
-                enabledSeries: [0],
-                top: 0,
-                left: 0,
-                blur: 0,
-                opacity: 1
-            },
-            zoom: {
-                enabled: false
-            }
-        },
-        colors: ['#650865', '#003573'],
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: "smooth",
-            width: 3
-        },
-        series: [{
-                name: 'Costos',
-                data: [310, 400, 280, 510, 420, 1090, 1000, 310, 400, 280, 510, 420]
-            },
-            {
-                name: 'Ganancias',
-                data: [110, 320, 450, 320, 340, 520, 410, 110, 320, 450, 320, 340]
-            }
-        ],
-        xaxis: {
-            type: 'year',
-            categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-        },
-        yaxis: {
-            opposite: false,
-            labels: {
-                formatter: function(value) {
-                    return value + "K";
-                }
-            },
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left'
-        },
+
     }
-    var lineAreaChart = new ApexCharts(
-        document.querySelector("#timeline-chart"),
-        lineAreaOptions
-    );
-    lineAreaChart.render();
+}
+
+//la grafica de aca se genera con la libreria morris.js
+// falta asignar los valores ya obtenidos de empleados y cliente a la grafica
+
+
+    new Morris.Line({
+
+            // ID of the element in which to draw the chart.
+            element: 'grafica',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+              { year: '2021-01', value: 20 ,value2: 20  },
+              { year: '2021-02', value: 10 ,value2: 10 },
+              { year: '2021-03', value: 5 ,value2: 10 },
+              { year: '2021-04', value: 5 ,value2: 5 },
+              { year: '2021-05', value: 20 ,value2: 10 },
+
+            ],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'year',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['value', 'value2'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: ['Costos', 'Ganancias'],
+            resize: true,
+            lineColors:['#C14D9F' , '#5900FE']
+          });
+
 </script>
 @endpush
 
@@ -275,7 +148,8 @@ class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-sta
                         <div class="card-header">
                             <h3 class="card-title mb-2">Costos vs Ganancias</h3>
                         </div>
-                        <div class="card-content">
+                           <div class="card-content">
+                            <div id="grafica"></div>
                             <div id="timeline-chart"></div>
                         </div>
                     </div>

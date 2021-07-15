@@ -11,13 +11,23 @@
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
 <script src="{{ asset('template/app-assets/js/core/app-menu.js') }}"></script>
 <script src="{{ asset('template/app-assets/js/core/app.js') }}"></script>
 <script src="{{ asset('template/app-assets/js/scripts/components.js') }}"></script>
 <script src="{{ asset('js/apexcharts.js') }}"></script>
+
+<script src="{{ asset('js/morris.css') }}"></script>
+<script src="{{ asset('js/morris.min.js') }}"></script>
+<script src="{{ asset('js/morris.js') }}"></script>
+<script src="{{ asset('js/raphael.min.js') }}"></script>
+
 <script src="{{ asset('template/app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
 <script src="{{ asset('template/app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('template/app-assets/js/scripts/pages/app-chat.js') }}"></script>
+
+
 
 <!-- END: Theme JS-->
 

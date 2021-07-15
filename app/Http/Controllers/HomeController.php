@@ -19,8 +19,8 @@ class HomeController extends Controller
 
     }
 
-   
-    /** 
+
+    /**
      * Vista principal para cada rol
      *
      * @return void
@@ -28,8 +28,8 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('home'); 
-        
+        return view('home');
+
     }
 
     /**
@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         return view('home.admin')
         ->with('user', $user)
-        ->with('hosting', $hosting); 
+        ->with('hosting', $hosting);
 
     }
 
@@ -56,8 +56,8 @@ class HomeController extends Controller
      */
     public function client()
     {
-           return view('home.client'); 
-        
+           return view('home.client');
+
     }
 
       /**
@@ -67,7 +67,7 @@ class HomeController extends Controller
      */
     public function employes()
     {
-           return view('home.employe'); 
-        
+           return view('home.employe');
+
     }
 }

@@ -22,9 +22,17 @@ class AdminController extends Controller
 
         $hosting = Hosting::all();
 
+//en la variable $ingresosEgresos se obtiene los valores de  las columnas
+// date, amount , type de la tabla bills
+
+        $ingresosEgresos= DB:: table('bills')
+                  ->select('date','amount','type')
+                  ->get();
+       // dd($j);
         return view('admin.home')
+            ->with('ingresosEgresos', $ingresosEgresos)
             ->with('user', $user)
-            ->with('hosting', $hosting); 
+            ->with('hosting', $hosting);
 
     }
 
@@ -39,7 +47,7 @@ class AdminController extends Controller
         $check = DB::table('users')
                     ->where('email', '=', $email)
                     ->first();
-        
+
         if (is_null($check)){
             return response()->json(false, 200);
         }else{
